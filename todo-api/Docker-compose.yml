@@ -1,0 +1,28 @@
+version: '3'
+
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  todo-api-example:
+    build: .
+    networks:
+      - app-tier
+    ports:
+      - "8080:8080"
+    depends_on:
+      - pgsqldb
+    volumes:
+      - "./:/run-nodejs-dockerfile/src/app"
+  pgsqldb:
+    image: postgres:12
+    ports:
+      -"5432:5432"
+    environment:
+      - POSTGRES_USER = postgres
+      - POSTGRES_PASSWORD = 29122001
+      - POSTGRES_DB = Todo_db
+    networks:
+      - app-tier

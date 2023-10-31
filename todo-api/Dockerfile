@@ -1,20 +1,18 @@
-FROM node:20.9.0-alpine3.18
+#Menggunakan OS node alpine pada saat docker dijalankan di container
+FROM node:18.14.2-alpine3.17
 
+#Nentuin folder apa yang akan di set di docker
+WORKDIR /run-nodejs-dockerfile/src/app
 
-# Set working directory dalam kontainer
-WORKDIR /rakamin-agasi-todo/src/app
-
-# Salin package.json dan package-lock.json ke kontainer
+#Copy package.json dan package.lock.json ke dalam folder docker
 COPY package*.json ./
 
-# Instal dependensi Node.js
 RUN npm install
 
-# Salin sumber kode aplikasi ke kontainer
+#Copy seluruh folder ke dalam folder docker
 COPY . .
 
-# Ekspose port yang digunakan oleh aplikasi Node.js
-EXPOSE 3000
+EXPOSE 8080
 
-# Perintah untuk menjalankan aplikasi Node.js
-CMD ["node", "app.js"]
+#Jalankan perintah node app.js
+CMD [ "node", "app.js" ]
